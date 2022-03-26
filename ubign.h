@@ -20,18 +20,22 @@ typedef struct _ubn     ubn_t;
  *  log(2 ^ ((UBN_BLOCK_SIZE * BITS_PER_BYTE) * UBN_ARRAY_SIZE))
  *  which is 308.25..., we ceil it and plus 1 for null terminator 
 */
-#define UBN_STR_SIZE            310
+//#define UBN_STR_SIZE            310
+#define UBN_STR_SIZE            100
 
 struct _ubn {
     ubn_b_t arr[UBN_ARRAY_SIZE];
 };
 
-#define ubn_init(ubn, n) \
-    memset(ubn, n, sizeof(ubn_b_t) * UBN_ARRAY_SIZE)
+#define ubn_init(ubn) \
+    memset(ubn, 0, UBN_FULL_SIZE)
+
+#define buf_init(buf) \
+    memset(buf, '0', UBN_STR_SIZE)
 
 static inline void ubn_from_extend(ubn_t *ubn, ubn_b_extend_t tmp)
 {
-    ubn_init(ubn, 0);
+    ubn_init(ubn);
     ubn->arr[0] = tmp;
     ubn->arr[1] = tmp >> (BITS_PER_BYTE * UBN_BLOCK_SIZE);
 }

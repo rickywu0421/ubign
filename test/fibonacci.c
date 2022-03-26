@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include "../ubign.h"
 
-#define FIB_MAX 100
+#define FIB_MAX 1000
 
 /* Returns one plus the index of the most significant 1-bit of n */
 #define flsll(n)    (64 - __builtin_clzll(n))
@@ -56,8 +56,8 @@ static ubn_t fib_sequence(long long n)
 int main()
 {
     char buf[UBN_STR_SIZE];
-
-    for (long long i = 0; i < FIB_MAX; i++) {
+    
+    for (long long i = 0; i <= FIB_MAX; i++) {
         ubn_t fib = fib_sequence(i);
         ubn_to_str(&fib, buf);
         printf("f(%lld) = %s\n", i, buf);

@@ -1,11 +1,13 @@
 CC := gcc
-CFLAGS := -O1 -g -Wall -Werror
+#CFLAGS := -O1 -g -Wall -Werror
+CFLAGS := -O1 -g -Wall -fno-stack-protector
 
 TEST_DIR := test
-OBJS := u128.o ubign.o $(TEST_DIR)/fibonacci.o
+TEST_EXEC := fibonacci
+OBJS := u128.o ubign.o $(TEST_DIR)/$(TEST_EXEC).o
 DEPS := $(OBJS:%.o=.%.o.d)
 
-test: fibonacci
+test: $(TEST_EXEC)
 
 # Control the build verbosity
 ifeq ($(VERBOSE), 1)
@@ -17,7 +19,7 @@ else
 endif
 
 
-fibonacci: $(OBJS)
+$(TEST_EXEC): $(OBJS)
 	$(VECHO) "LD\t$@\n"
 	$(Q) $(CC) $(LDFLAGS) -o $@ $^
 
@@ -28,6 +30,6 @@ fibonacci: $(OBJS)
 
 .PHONY: clean
 clean:
-	rm -rf $(OBJS) $(DEPS) fibonacci
+	rm -rf $(OBJS) $(DEPS) $(TEST_EXEC)
 
 -include $(DEPS)
