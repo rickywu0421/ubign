@@ -6,8 +6,9 @@ void ubn_add(ubn_t *a, ubn_t *b, ubn_t *c)
 {
     int carry = 0;
     for (int i = 0; i < UBN_ARRAY_SIZE; i++) {
+        ubn_b_t tmp_a = a->arr[i];
         c->arr[i] = a->arr[i] + b->arr[i] + carry;
-        carry = (c->arr[i] < a->arr[i]);
+        carry = (c->arr[i] < tmp_a);
     }
 }
 
@@ -15,8 +16,9 @@ void ubn_sub(ubn_t *a, ubn_t *b, ubn_t *c)
 {
     int borrow = 0;
     for (int i = 0; i < UBN_ARRAY_SIZE; i++) {
+        ubn_b_t tmp_a = a->arr[i];
         c->arr[i] = a->arr[i] - b->arr[i] - borrow;
-        borrow = (c->arr[i] > a->arr[i]);
+        borrow = (c->arr[i] > tmp_a);
     }
 }
 
